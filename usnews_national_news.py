@@ -21,16 +21,19 @@ def download_usnews_national_news(offset,count):
 	dic={}
 	dic['status']=1
 	if str(offset).isdigit() == False or str(count).isdigit() ==False:
+		print "input error: illege input"
 		dic['status']=1
 		return dic
+	offset=int(offset)
+	count=int(count)
 	current=0
 	file_name='usnews_national_new_offset_'+str(offset)+"_count_"+str(count)+"_"+str(int(time.time()))+".txt"
 	fw=open("download/"+file_name,'w')
-
+	
 	while current<count:
 		# print current
 		try:
-			url = 'https://www.usnews.com/news/national-news?offset='+str(offset+current)+'&renderer=json'
+			url = 'https://www.usnews.com/news/business?offset='+str(offset+current)+'&renderer=json'
 			# print url
 			req = requests.get(url, headers=headers, timeout=60)
 			req.encoding="utf-8"
@@ -40,7 +43,7 @@ def download_usnews_national_news(offset,count):
 				if json_text.get('stories'):
 					for item in json_text['stories']:
 						try:
-							s="start: "+str(offset+current)+" title: "+item['short_headline'].encode("utf-8")+" ,pubdate:"+item['pubdate'].encode("utf-8")
+							s="start: "+str(offset+current)+" title: "+item['short_headline'].encode("utf-8")+" ,"+item['pubdate'].encode("utf-8")
 							print s
 							fw.write(s+"\n")
 							current+=1
@@ -59,4 +62,4 @@ def download_usnews_national_news(offset,count):
 	dic['file_name']=file_name
 	return dic
 
-download_usnews_national_news(int(sys.argv[1]),int(sys.argv[2]))
+download_usnews_national_news(sys.argv[1],sys.argv[2])
