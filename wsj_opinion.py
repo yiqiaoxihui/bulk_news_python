@@ -73,17 +73,20 @@ def wsj_opinion(begin_page,end_page,type_name):
 					# print("*************************")
 					# print item.string.encode('utf-8')
 					h3=item.find('h3',attrs={"class":"headline"})
+					time_lable=item.find('time',attrs={"class":"date-stamp-container"})
+					# date=time_lable.find(attrs={"class":"time-container"})
 					# print h3.string.encode('utf-8')
 					a=h3.find('a')
 					count+=1
-					s="page:"+str(i)+" count: "+str(count)+" title: "+a.text.encode('utf-8').strip()
+					s="page:"+str(i)+" count: "+str(count)+" title: "+a.text.encode('utf-8').strip()+", "+time_lable.text.encode('utf-8').strip()
 					print s
 					fw.write(s+"\n")
 					#print(a['href'])
 					#print(a.string)
 			except Exception as e:
 				print "find error:",e
-
+				dic['msg']="line error: "+str(e)
+				dic['status']=0
 		except Exception as e:
 			print "request error:",e
 			dic['msg']="request error: "+str(e)

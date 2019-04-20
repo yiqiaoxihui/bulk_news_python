@@ -1,0 +1,43 @@
+page:1 count: 1 title: Congress may finally be addressing robocalls. But it may not be enough.
+page:1 count: 2 title: How could Volkswagen’s CEO not know about China’s repression of Muslims?
+page:1 count: 3 title: Bobby Zirkin wanted to close the long-gun loophole. What happened?
+page:1 count: 4 title: The Mueller report is the opposite of exoneration
+page:1 count: 5 title: The Indian and Indonesian leaders have drifted toward intolerance. Will voters reelect them?
+page:1 count: 6 title: YouTube’s algorithm failed Notre Dame. People — not programs — should have been paying attention.
+page:1 count: 7 title: Barr’s redactions on the Mueller report don’t deserve the benefit of the doubt
+page:1 count: 8 title: Hong Kong's new extradition laws open the gates to Chinese repression
+page:1 count: 9 title: Democratic hopefuls are releasing their tax returns. Where are Trump’s?
+page:1 count: 10 title: Saudi Arabia’s reckless prince fuels yet another civil war
+page:1 count: 11 title: The Trump administration’s suspicion of science claims another victim
+page:1 count: 12 title: The world weeps for Notre Dame
+page:1 count: 13 title: Google can see where you’ve been. So can law enforcement.
+page:1 count: 14 title: Trump shouldn’t complain about slow confirmations when he nominates people like this
+page:1 count: 15 title: Trump thinks the WTO is sabotaging U.S. trade. In this case, the system is working.
+page:2 count: 16 title: Congress may finally be addressing robocalls. But it may not be enough.
+page:2 count: 17 title: How could Volkswagen’s CEO not know about China’s repression of Muslims?
+page:2 count: 18 title: Bobby Zirkin wanted to close the long-gun loophole. What happened?
+page:2 count: 19 title: The Mueller report is the opposite of exoneration
+page:2 count: 20 title: The Indian and Indonesian leaders have drifted toward intolerance. Will voters reelect them?
+page:2 count: 21 title: YouTube’s algorithm failed Notre Dame. People — not programs — should have been paying attention.
+page:2 count: 22 title: Barr’s redactions on the Mueller report don’t deserve the benefit of the doubt
+page:2 count: 23 title: Hong Kong's new extradition laws open the gates to Chinese repression
+page:2 count: 24 title: Democratic hopefuls are releasing their tax returns. Where are Trump’s?
+page:2 count: 25 title: Saudi Arabia’s reckless prince fuels yet another civil war
+page:2 count: 26 title: The Trump administration’s suspicion of science claims another victim
+page:2 count: 27 title: The world weeps for Notre Dame
+page:2 count: 28 title: Google can see where you’ve been. So can law enforcement.
+page:2 count: 29 title: Trump shouldn’t complain about slow confirmations when he nominates people like this
+page:2 count: 30 title: Trump thinks the WTO is sabotaging U.S. trade. In this case, the system is working.
+page:3 count: 31 title: Congress may finally be addressing robocalls. But it may not be enough.
+page:3 count: 32 title: How could Volkswagen’s CEO not know about China’s repression of Muslims?
+page:3 count: 33 title: Bobby Zirkin wanted to close the long-gun loophole. What happened?
+page:3 count: 34 title: The Mueller report is the opposite of exoneration
+page:3 count: 35 title: The Indian and Indonesian leaders have drifted toward intolerance. Will voters reelect them?
+page:3 count: 36 title: YouTube’s algorithm failed Notre Dame. People — not programs — should have been paying attention.
+page:3 count: 37 title: Barr’s redactions on the Mueller report don’t deserve the benefit of the doubt
+page:3 count: 38 title: Hong Kong's new extradition laws open the gates to Chinese repression
+page:3 count: 39 title: Democratic hopefuls are releasing their tax returns. Where are Trump’s?
+page:3 count: 40 title: Saudi Arabia’s reckless prince fuels yet another civil war
+page:3 count: 41 title: The Trump administration’s suspicion of science claims another victim
+page:3 count: 42 title: The world weeps for Notre Dame
+page:3 count: 43 title: Google can see where you’ve been. So can law en

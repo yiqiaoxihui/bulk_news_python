@@ -1,0 +1,15 @@
+page:1 count: 1 title: Readers critique The Post: Ageism, Bauhaus’s beauty and a virtuoso headline performance
+page:1 count: 2 title: Readers critique The Post: An omitted flag-raiser at Iwo Jima and bad stereotypes about Appalachia
+page:1 count: 3 title: Readers critique The Post: Micro-critters and Mueller, with tacos to boot
+page:1 count: 4 title: Readers critique The Post: D.C. United, El Salvador and truth in fiction
+page:1 count: 5 title: Readers critique The Post: Democrats with experience and a quibble over ‘Britain’
+page:1 count: 6 title: Readers critique The Post: India’s socialist past, R.I.P. Bryce and a bad malaprop
+page:1 count: 7 title: Readers critique The Post: The Oscars, bookstores and the mystery of Stonehenge
+page:1 count: 8 title: Readers critique The Post: Larry Hogan, Hillary Clinton and the art of capturing pure joy
+page:1 count: 9 title: Readers critique The Post: Careful describing the Supreme Court justices — and the boy Whiffenpoofs
+page:1 count: 10 title: Readers critique The Post: Do women account for only 9% of The Post’s obituaries?
+page:1 count: 11 title: Readers critique The Post: Nancy Pelosi deserves better and Pete Buttigieg is far from revolutionary
+page:1 count: 12 title: Readers critique The Post: Newt Gingrich, Mitch McConnell and a Republican 2020 challenger
+page:1 count: 13 title: Readers critique The Post: Deepfakes, split infinitives and not doing enough about R. Kelly
+page:1 count: 14 title: Readers critique The Post: The shutdown, millennials and the greatest cinematic year
+page:1 count: 15 title: Readers critique The Post: Empty calendars, full maps and more Ulysses S. Grant
