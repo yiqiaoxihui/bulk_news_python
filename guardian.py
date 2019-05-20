@@ -34,7 +34,9 @@ def swarm_theguardian(begin_page,end_page):
 	for i in range(begin_page,end_page+1):
 		# time.sleep(1)
 		try:
+
 			url = 'https://www.theguardian.com/commentisfree?page='+str(i)
+			url = 'https://www.theguardian.com/lifeandstyle?page='+str(i)
 			req = requests.get(url, headers=headers, timeout=60)
 			# req.encoding="utf-8"
 			soup = BeautifulSoup((req.text).encode('utf-8'), 'html.parser')
