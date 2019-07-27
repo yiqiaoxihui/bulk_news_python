@@ -37,17 +37,22 @@ def download_washingtonpost_opinion(page_begin,page_end,type_name):
 		page_end=1
 	file_name='washingtonpost_opinion_page_from_'+str(page_begin)+"_to_"+str(page_end)+"_"+str(int(time.time()))+".txt"
 	fw=open("download/"+file_name,'w')
-	limit=60
+	limit=10
 	count=0
 	for i in range(page_begin,page_end+1):
-		offset=(page_begin-1)*limit
+		offset=(i-1)*limit
 		try:
 			if type_name=="local-opinions":
-				url='https://www.washingtonpost.com/pb/api/v2/render/feature?id=fL05x91im8Wwar&contentConfig=%7B%22path%22%3A%22%2Fopinions%2F%3Fquery%3D%2FWashingtonPost%2FProduction%2FDigital%2FQueries%2Fsite-service%2Fopinions%2Fcth-localops%26limit%3D'+str(limit)+'%26offset%3D'+str(offset)+'%22%7D&uri=/pb/opinions/local-opinions/&service=com.washingtonpost.webapps.pagebuilder.services.StoryAdapterService'
+				url='https://www.washingtonpost.com/pb/api/v2/render/feature/?service=prism-query&contentConfig={%22url%22:%22prism://prism.query/site,/opinions/local-opinions%22,%22offset%22:'+str(offset)+',%22limit%22:'+str(limit)+'}&customFields={%22isLoadMore%22:true,%22offset%22:0,%22maxToShow%22:10,%22dedup%22:false}&id=f0OLVMlE4mWKvr&rid=&uri=/opinions/local-opinions/'
+				# url='https://www.washingtonpost.com/pb/api/v2/render/feature/?service=prism-query&contentConfig={%22url%22:%22prism://prism.query/site,/opinions/local-opinions%22,%22offset%22:5,%22limit%22:10}&customFields={%22isLoadMore%22:true,%22offset%22:0,%22maxToShow%22:10,%22dedup%22:false}&id=f0OLVMlE4mWKvr&rid=&uri=/opinions/local-opinions/'
 			elif type_name =='global-opinions':
-				url='https://www.washingtonpost.com/pb/api/v2/render/feature?id=f0Aac2b2PCZvhr&contentConfig=%7B%22path%22%3A%22%2Fopinions%2F%3Fquery%3D%2FWashingtonPost%2FProduction%2FDigital%2FPages-Web%2Fopinions%2F_module-content%2Fglobal-opinions%26limit%3D'+str(limit)+'%26offset%3D'+str(offset)+'%22%7D&uri=/pb/global-opinions/&service=com.washingtonpost.webapps.pagebuilder.services.StoryAdapterService'
+				url='https://www.washingtonpost.com/pb/api/v2/render/feature/?contentConfig={%22path%22:%22http://www.washingtonpost.com/opinions/?offset='+str(offset)+'%26limit='+str(limit)+'%26query=%2fWashingtonPost%2fProduction%2fDigital%2fQueries%2fsite-service%2fopinions%2fglobal-opinions-front%22}&customFields={%22isLoadMore%22:true,%22showLoadMore%22:true,%22offset%22:0,%22offsetTotal%22:10,%22maxToShow%22:10,%22dedup%22:false}&id=f4Dqas1OzIUKvr&rid=&uri=/global-opinions/'
+				# url='https://www.washingtonpost.com/pb/api/v2/render/feature?id=f0Aac2b2PCZvhr&contentConfig=%7B%22path%22%3A%22%2Fopinions%2F%3Fquery%3D%2FWashingtonPost%2FProduction%2FDigital%2FPages-Web%2Fopinions%2F_module-content%2Fglobal-opinions%26limit%3D'+str(limit)+'%26offset%3D'+str(offset)+'%22%7D&uri=/pb/global-opinions/&service=com.washingtonpost.webapps.pagebuilder.services.StoryAdapterService'
+			elif type_name=='the-posts-view':
+				url='https://www.washingtonpost.com/pb/api/v2/render/feature/section/story-list?content_origin=prism-query&url=prism://prism.query/author,the-posts-view&offset='+str(offset)+'&limit='+str(limit)
 			else:
-				url='https://www.washingtonpost.com/pb/api/v2/render/feature?id=fRRAZV1tyeKUar&contentConfig=%7B%22path%22%3A%22%2F'+type_name_dic[type_name]+'%2F%3Flimit%3D'+str(limit)+'%26offset%3D'+str(offset)+'%22%7D&uri=/pb/'+type_name_dic[type_name]+'/&service=com.washingtonpost.webapps.pagebuilder.services.StoryAdapterService'
+				# url='https://www.washingtonpost.com/pb/api/v2/render/feature?id=fzUfk61n8wBqur&contentConfig=%7B%22path%22%3A%22%2Foutlook%2F%3Flimit%3D15%26offset%3D23%22%7D&uri=/pb/outlook/&service=com.washingtonpost.webapps.pagebuilder.services.StoryAdapterService'
+				url='https://www.washingtonpost.com/pb/api/v2/render/feature?id=fzUfk61n8wBqur&contentConfig=%7B%22path%22%3A%22%2F'+type_name_dic[type_name]+'%2F%3Flimit%3D'+str(limit)+'%26offset%3D'+str(offset)+'%22%7D&uri=/pb/'+type_name_dic[type_name]+'/&service=com.washingtonpost.webapps.pagebuilder.services.StoryAdapterService'
 			# print url
 			req = requests.get(url, headers=headers, timeout=60)
 			req.encoding="utf-8"
@@ -55,12 +60,26 @@ def download_washingtonpost_opinion(page_begin,page_end,type_name):
 			try:
 				json_text=json.loads(req.text)
 				if json_text.get('rendering'):
+					# print json_text['rendering']
 					soup = BeautifulSoup(json_text['rendering'].encode('utf-8'), 'lxml')
 					try:
-						for a in soup.find_all(name='a',attrs={"data-pb-local-content-field":"web_headline"}):
+						a_list=soup.find_all(name='a',attrs={"data-pb-url-field":"canonical_url"})
+						if len(a_list)>0:
+							pass
+						else:
+							# print "web_headline^^^^^^^^^^^^^^^^"
+							a_list=soup.find_all(name='a',attrs={"data-pb-local-content-field":"web_headline"})
+						for a in a_list:
 							count+=1
-							s="page:"+str(i)+" count: "+str(count)+" title: "+a.text.encode('utf-8').strip()
+							href_split=a['href'].split('/')
+							date=""
+							if len(href_split)>=4:
+								date=href_split[-4]+'/'+href_split[-3]+'/'+href_split[-2]
+								# print date
+							s="page:"+str(i)+" count: "+str(count)+" title: "+a.text.encode('utf-8').strip()+" "+date
 							print s
+							# print a['href']
+
 							fw.write(s+"\n")
 					except Exception as e:
 						print "find error:",e
@@ -69,7 +88,7 @@ def download_washingtonpost_opinion(page_begin,page_end,type_name):
 
 			except Exception as e:
 				print "loads error:", e
-				print req.text
+				# print req.text
 				break
 		except Exception as e:
 			print "request error:", e
@@ -82,8 +101,8 @@ def download_washingtonpost_opinion(page_begin,page_end,type_name):
 
 
 s='letters-to-the-editor'
-s='global-opinions'
-s='local-opinions'
+# s='global-opinions'
+# s='local-opinions'
 s='the-posts-view'
-s='outlook'
+# s='outlook'
 download_washingtonpost_opinion(sys.argv[1],sys.argv[2],s)

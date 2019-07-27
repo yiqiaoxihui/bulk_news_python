@@ -11,14 +11,14 @@ import re
 # import pymysql
 import time
 
-def swarm_theguardian(begin_page,end_page):
+def swarm_theguardian(begin_page,end_page,type_name):
 	headers = {}
 	headers["User-Agent"] = "Mozilla/5.0 (Windows NT 5.2) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30"
 	headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
 	headers["Accept-Language"] = "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3"
 	headers["Accept-Encoding"] = "gzip, deflate"
 	headers["Upgrade-Insecure-Requests"] = "1"
-	file_name='theguardian_page_'+str(begin_page)+"_to_"+str(end_page)+"_"+str(int(time.time()))+".txt"
+	file_name='theguardian_page_'+type_name+'_'+str(begin_page)+"_to_"+str(end_page)+"_"+str(int(time.time()))+".txt"
 	count=0
 	dic={}
 	dic['status']=1
@@ -35,8 +35,8 @@ def swarm_theguardian(begin_page,end_page):
 		# time.sleep(1)
 		try:
 
-			url = 'https://www.theguardian.com/commentisfree?page='+str(i)
-			url = 'https://www.theguardian.com/lifeandstyle?page='+str(i)
+			# url = 'https://www.theguardian.com/commentisfree?page='+str(i)
+			url = 'https://www.theguardian.com/'+type_name+'?page='+str(i)
 			req = requests.get(url, headers=headers, timeout=60)
 			# req.encoding="utf-8"
 			soup = BeautifulSoup((req.text).encode('utf-8'), 'html.parser')
@@ -57,5 +57,15 @@ def swarm_theguardian(begin_page,end_page):
 	fw.close()
 	dic['file_name']=file_name
 	return dic
-
-swarm_theguardian(sys.argv[1],sys.argv[2])
+if __name__ == '__main__':
+	if sys.argv[1]=="help":
+		print "commentisfree"
+		print "lifeandstyle"
+		print "environment"
+		print "business"
+		print "technology"
+		print "science"
+		print "culture"
+		print "sport"
+	else:
+		swarm_theguardian(sys.argv[1],sys.argv[2],sys.argv[3])

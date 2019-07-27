@@ -71,9 +71,12 @@ def swarm_history(begin_page,end_page):
 			# req.encoding="utf-8"
 			# print req.text.encode('utf-8')
 			html_str=json.loads(req.text.encode('utf-8'))['html']
-			soup = BeautifulSoup(html_str.encode('utf-8'), 'lxml')#html.parser
+			soup = BeautifulSoup(html_str.encode('utf-8'), 'html.parser')#html.parser
 			query_token=soup.find(name='div',attrs={"class":"m-component-footer--container m-component-stack--footer"})
 			if not query_token:
+				print moreResultsToken
+				print initialSlots
+				print url
 				print "history:get query_token fail",i
 				continue
 			else:

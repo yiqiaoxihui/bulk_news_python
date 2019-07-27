@@ -19,30 +19,35 @@ headers["Accept-Encoding"] = "gzip, deflate"
 headers["Upgrade-Insecure-Requests"] = "1"
  
 
-def swarm_time(begin_page,end_page,type1):
-	current=1
-	while begin_page<end_page:
+def swarm_rd(begin_page,end_page,type1):
+	current=0
+	while begin_page<=end_page:
 		# print current
 		try:
-			url = 'https://time.com/section/'+type1+'/?page='+str(begin_page)
+			url = 'https://www.livescience.com/'+type1+'/'+str(begin_page)
 			req = requests.get(url, headers=headers, timeout=60)
 			req.encoding="utf-8"
 			soup = BeautifulSoup(req.text, 'html.parser')
 			# print req.text
 			list = []
-			for article in soup.find_all(name='article',attrs={"class":"partial tile media image-top type-article"}):
+			for article in soup.find_all(name='li',attrs={"class":"search-item line pure-g"}):
 				# print article
 				# h3=article.find_all('h3')[0]
 				try:
-					h3=article.find('h3',attrs={"class":"headline heading-3 heading-content-small padding-4-top margin-8-bottom media-heading"})
+					date_div=article.find('div',attrs={"class":"date-posted"})
+					date=date_div.string.encode('utf-8').strip()
+					h2=article.find('h2',attrs={})
+					a=h2.find('a',attrs={})
 					# print h3
 					# print  "h3.find"
-					a=h3.find('a')
+					# a=h3.find('a')
 					# print a
-					print "page:",begin_page,"count:",current,"title: ",a.string.encode("utf-8").strip()
+					print "page:",begin_page,"count:",current,"title: ",a.string.encode("utf-8").strip(),",",date
 					current+=1
+					if current % 20 == 0:
+						time.sleep(30)
 				except Exception as e:
-					# print "h3",e
+					print "get article",e
 					pass
 				#print(a['href'])
 				#print(a.string)
@@ -51,6 +56,4 @@ def swarm_time(begin_page,end_page,type1):
 			print(e)
 		begin_page+=1
 if __name__ == "__main__":
-	swarm_time(int(sys.argv[1]),int(sys.argv[2]),sys.argv[3])
-
-
+	swarm_rd(int(sys.argv[1]),int(sys.argv[2]),sys.argv[3])

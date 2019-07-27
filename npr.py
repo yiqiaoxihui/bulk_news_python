@@ -19,27 +19,32 @@ headers["Accept-Encoding"] = "gzip, deflate"
 headers["Upgrade-Insecure-Requests"] = "1"
  
 
-def swarm_npr(begin_news,count):
+def swarm_npr(begin_news,count,typ):
 	current=0
 	while current<count:
 		# print current
 		try:
-			url = 'https://www.npr.org/sections/health/archive?start='+str(begin_news+current)
+			url = 'https://www.npr.org/sections/'+typ+'/archive?start='+str(begin_news+current)
 			req = requests.get(url, headers=headers, timeout=60)
 			req.encoding="utf-8"
 			soup = BeautifulSoup(req.text, 'html.parser')
 			list = []
-			for h2 in soup.find_all(name='h2',attrs={"class":"title"}):
-				a=h2.find_all('a')[0]
-				print "start:",begin_news+current,"title: ",a.string.encode("utf-8")
+			for article in soup.find_all(name='article',attrs={"class":"item"}):
+				h2=article.find(name='h2',attrs={"class":"title"})
+				a=h2.find(name='a',attrs={})
+				date_dom=article.find(name='time',attrs={})
+				date=date_dom['datetime']
+				s= "start:"+str(begin_news+current)+" title: "+a.string.encode("utf-8")+","+date.encode("utf-8")
 				current+=1
+				print s
 				#print(a['href'])
 				#print(a.string)
 		except Exception as e:
 			print "error:",
-			print(e)
+			print e,h2
 
 if __name__ == "__main__":
-	swarm_npr(int(sys.argv[1]),int(sys.argv[2]))
+	typ="science"
+	swarm_npr(int(sys.argv[1]),int(sys.argv[2]),typ)
 
 
