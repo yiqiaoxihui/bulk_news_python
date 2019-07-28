@@ -20,7 +20,7 @@ headers["Accept-Encoding"] = "gzip, deflate"
 headers["Upgrade-Insecure-Requests"] = "1"
  
 
-def swarm_rd(begin_page,end_page,type1):
+def swarm_mashable(begin_page,end_page,type1):
 	current=0
 	while begin_page<=end_page:
 		# print current
@@ -57,4 +57,4 @@ def swarm_rd(begin_page,end_page,type1):
 			# print(e)
 		begin_page+=1
 if __name__ == "__main__":
-	swarm_rd(int(sys.argv[1]),int(sys.argv[2]),sys.argv[3])
+	swarm_mashable(int(sys.argv[1]),int(sys.argv[2]),sys.argv[3])

@@ -39,13 +39,14 @@ def swarm_csmonitor(begin_page,end_page):
 		offset=(i-1)*20
 		try:
 			url = 'https://www.csmonitor.com/Commentary/the-monitors-view/(offset)/'+str(offset)+'/(view)/all'
-			print url
+			# print url
 			req = requests.get(url, headers=headers, timeout=60)
 			# req.encoding="utf-8"
 			soup = BeautifulSoup((req.text).encode('utf-8'), 'html.parser')
 			list = []
 			# print req.text
 			for item in soup.find_all(name='div',attrs={"class":"ezv-listing ezc-csm-story row with-thumbnail"}):
+				# print item
 				try:
 					h3=item.find('h3',attrs={"class":"story-headline"})
 					# print a
@@ -53,10 +54,17 @@ def swarm_csmonitor(begin_page,end_page):
 					print "find a error:", e
 					continue
 				if (not h3):
+					print "not h3"
 					continue
 				count+=1
-				s="page:"+str(i)+" count: "+str(count)+" title: "+h3.text.encode('utf-8').strip()
-				# print s
+				try:
+					a=item.find('a',attrs={})
+					a_list=a['href'].encode('utf-8').split('/')
+					date=a_list[-3]+'/'+a_list[-2]
+				except Exception as e:
+					print e
+				s="page:"+str(i)+" count: "+str(count)+" title: "+h3.text.encode('utf-8').strip()+","+date
+				print s
 				fw.write(s+"\n")
 		except Exception as e:
 			print "parser error:",e

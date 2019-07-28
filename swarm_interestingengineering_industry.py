@@ -20,6 +20,7 @@ headers["Upgrade-Insecure-Requests"] = "1"
 def swarm_interestingengineering_industry(begin_page,end_page):
 	# fw=open('2','w')
 	time.sleep(1)
+	count=1
 	for i in range(begin_page,end_page+1):
 		try:
 			url = 'https://interestingengineering.com/industry?page='+str(i)
@@ -27,16 +28,17 @@ def swarm_interestingengineering_industry(begin_page,end_page):
 			# CVEList_html = getMiddleStr(res.text, 'New entries:', 'Graduations')
 			soup = BeautifulSoup((res.text).encode('utf-8'), 'html.parser')
 			list = []
-			for h2 in soup.find_all(name='h2',attrs={"class":"clearfix"}):
+			for article in soup.find_all(name='article',attrs={"class":"sub-featured-v ias-item"}):
+				h2=article.find(name='h2',attrs={"class":"clearfix"})
 				a=h2.find_all('a')[0]
-				print "page:",i,"title: ",a.string.encode("utf-8")	#
-				# fw.write("page:"+str(i)+" title: "+a.string+"\n")
-				#print(a['href'])
-				#print(a.string)
+				date_dom=article.find(name='time',attrs={})
+				date=date_dom['datetime'].encode('utf-8').split('T')[0]
+				s= "page:"+str(i)+" count:"+str(count)+" title: "+a.string.encode("utf-8")+","+date	#
+				count=count+1
+				print s
 		except Exception as e:
 			print "error:",
 			print(e)
  
 if __name__ == "__main__":
 	swarm_interestingengineering_industry(int(sys.argv[1]),int(sys.argv[2]))
-

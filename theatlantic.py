@@ -30,16 +30,17 @@ def theatlantic(begin_page,end_page):
 			# req.encoding="utf-8"
 			soup = BeautifulSoup((req.text).encode('utf-8'), 'html.parser')
 			list = []
-			for h2 in soup.find_all(name='h2',attrs={"class":"hed"}):
+			for li in soup.find_all(name='li',attrs={"class":"article blog-article"}):
 				# a=h2.find_all('a')[0]
-				title=""
+				h2=li.find(name='h2',attrs={'class':'hed'})
 				# for em in h2.find_all("em"):
 				# 	em_str=str(em.string).encode('utf-8').strip()
 
 				# 	title=title+" " +em_str
+				date=li.find(name='time',attrs={})['datetime'].encode('utf-8')
 				count+=1
-				print "count:",count," page:",i,"title: ",title+" "+h2.text.encode('utf-8').strip()
-				
+				s="count:"+str(count)+" page:"+str(i)+" title: "+h2.text.encode('utf-8').strip()+","+date
+				print s
 				#print(a['href'])
 				#print(a.string)
 		except Exception as e:
