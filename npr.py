@@ -44,7 +44,10 @@ def swarm_npr(begin_news,count,typ):
 			print e,h2
 
 if __name__ == "__main__":
-	typ="science"
-	swarm_npr(int(sys.argv[1]),int(sys.argv[2]),typ)
+	typ="business"
+	typ="national"
+	typ="health"
+	typ="technology"
+	swarm_npr(int(sys.argv[1]),int(sys.argv[2]),sys.argv[3])
 
 

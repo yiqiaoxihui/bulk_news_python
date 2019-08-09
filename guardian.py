@@ -34,7 +34,6 @@ def swarm_theguardian(begin_page,end_page,type_name):
 	for i in range(begin_page,end_page+1):
 		# time.sleep(1)
 		try:
-
 			# url = 'https://www.theguardian.com/commentisfree?page='+str(i)
 			url = 'https://www.theguardian.com/'+type_name+'?page='+str(i)
 			req = requests.get(url, headers=headers, timeout=60)
@@ -67,5 +66,6 @@ if __name__ == '__main__':
 		print "science"
 		print "culture"
 		print "sport"
+		print "uk-news"
 	else:
 		swarm_theguardian(sys.argv[1],sys.argv[2],sys.argv[3])
