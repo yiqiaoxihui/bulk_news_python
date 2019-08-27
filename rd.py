@@ -58,6 +58,7 @@ def swarm_rd(begin_page,end_page,type1):
 					h4=article.find('h4',attrs={})
 					s= "page:"+str(begin_page)+" count:"+str(current)+" title: "+h4.string.encode("utf-8").strip()
 					fw.write(s+"\n")
+					print s
 					current+=1
 				except Exception as e:
 					print "h3",e
