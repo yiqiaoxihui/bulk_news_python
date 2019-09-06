@@ -4,14 +4,14 @@ import requests
 import re
 # import pymysql
 import time
-def swarm_salon(begin_page,end_page,typ):
+def swarm_nautil(begin_page,end_page):
 	headers = {}
 	headers["User-Agent"] = "Mozilla/5.0 (Windows NT 5.2) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30"
 	headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
 	headers["Accept-Language"] = "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3"
 	headers["Accept-Encoding"] = "gzip, deflate"
 	headers["Upgrade-Insecure-Requests"] = "1"
-	file_name='salon_page_'+str(begin_page)+"_to_"+str(end_page)+"_"+str(int(time.time()))+".txt"
+	file_name='nautil_page_'+str(begin_page)+"_to_"+str(end_page)+"_blog"+".txt"
 	count=1
 	dic={}
 	dic['status']=1
@@ -31,25 +31,27 @@ def swarm_salon(begin_page,end_page,typ):
 	for i in range(begin_page,end_page+1):
 		try:
 			#the_conversation,science-and-health
-			url = 'https://www.salon.com/topic/'+typ+'?sort=new&pagenum='+str(i)
+			url = 'http://nautil.us/blog/page/'+str(i)
 			# print url
 			req = requests.get(url, headers=headers, timeout=60)
 			# req.encoding="utf-8"
 			soup = BeautifulSoup((req.text).encode('utf-8'), 'html.parser')
 			list = []
 			# print req.text
-			for item in soup.find_all('div',attrs={"class":"card-article"}):
+			for item in soup.find_all('article',attrs={"class":"blog-article"}):
 				pub_time=""
 				try:
-					h2=item.find('h2',attrs={})
+					h3=item.find('h3',attrs={"class":"article-title"})
 
-					a=item.find('a',attrs={})
-					if a:
-						href_list=a['href'].encode('utf-8').split('/')
-						pub_time=href_list[1]+'/'+href_list[2]+'/'+href_list[3]
-					s="page:"+str(i)+" count: "+str(count)+" title: "+h2.text.encode('utf-8').strip()+" ,"+pub_time
+					p=item.find('p',attrs={"class":"article-meta"})
+					if p:
+						p_list=p.text.encode('utf-8').split('on')
+						if len(p_list)>=2:
+							pub_time=p_list[1]
+					s="page:"+str(i)+" count: "+str(count)+" title: "+h3.text.encode('utf-8').strip()+" ,"+pub_time
 					print s
-					fw.write(s+"\n")
+					ws="title: "+h3.text.encode('utf-8').strip()+" ,"+pub_time
+					fw.write(ws+"\n")
 					count+=1
 				except Exception as e:
 					print "find title error:", e,h2
@@ -66,4 +68,4 @@ def swarm_salon(begin_page,end_page,typ):
 	dic['file_name']=file_name
 	return dic
 #latest-news,opinion
-swarm_salon(sys.argv[1],sys.argv[2],sys.argv[3])
+swarm_nautil(sys.argv[1],sys.argv[2])
