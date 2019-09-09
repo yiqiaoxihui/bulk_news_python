@@ -35,9 +35,12 @@ def download_washingtonpost_opinion(page_begin,page_end,type_name):
 		page_begin=1
 	if page_end<=0:
 		page_end=1
-	file_name='washingtonpost_opinion_page_from_'+str(page_begin)+"_to_"+str(page_end)+"_"+str(int(time.time()))+".txt"
+	now = int(time.time())
+	timeArray = time.localtime(now)
+	otherStyleTime = time.strftime("%Y_%m_%d", timeArray)#%H:%M:%S
+	file_name='washingtonpost_'+type_name+'_'+otherStyleTime+".txt"
 	fw=open("download/"+file_name,'w')
-	limit=10
+	limit=15
 	count=0
 	for i in range(page_begin,page_end+1):
 		offset=(i-1)*limit
@@ -51,8 +54,8 @@ def download_washingtonpost_opinion(page_begin,page_end,type_name):
 			elif type_name=='the-posts-view':
 				url='https://www.washingtonpost.com/pb/api/v2/render/feature/section/story-list?content_origin=prism-query&url=prism://prism.query/author,the-posts-view&offset='+str(offset)+'&limit='+str(limit)
 			else:
-				# url='https://www.washingtonpost.com/pb/api/v2/render/feature?id=fzUfk61n8wBqur&contentConfig=%7B%22path%22%3A%22%2Foutlook%2F%3Flimit%3D15%26offset%3D23%22%7D&uri=/pb/outlook/&service=com.washingtonpost.webapps.pagebuilder.services.StoryAdapterService'
-				url='https://www.washingtonpost.com/pb/api/v2/render/feature?id=fzUfk61n8wBqur&contentConfig=%7B%22path%22%3A%22%2F'+type_name_dic[type_name]+'%2F%3Flimit%3D'+str(limit)+'%26offset%3D'+str(offset)+'%22%7D&uri=/pb/'+type_name_dic[type_name]+'/&service=com.washingtonpost.webapps.pagebuilder.services.StoryAdapterService'
+				url='https://www.washingtonpost.com/pb/api/v2/render/feature/section/story-list?content_origin=prism-query&url=prism://prism.query/site,/opinions/'+type_name_dic[type_name]+'&offset='+str(offset)+'&limit='+str(limit)
+				# url='https://www.washingtonpost.com/pb/api/v2/render/feature?id=fzUfk61n8wBqur&contentConfig=%7B%22path%22%3A%22%2F'+type_name_dic[type_name]+'%2F%3Flimit%3D'+str(limit)+'%26offset%3D'+str(offset)+'%22%7D&uri=/pb/'+type_name_dic[type_name]+'/&service=com.washingtonpost.webapps.pagebuilder.services.StoryAdapterService'
 			# print url
 			req = requests.get(url, headers=headers, timeout=60)
 			req.encoding="utf-8"
@@ -74,13 +77,22 @@ def download_washingtonpost_opinion(page_begin,page_end,type_name):
 							href_split=a['href'].split('/')
 							date=""
 							if len(href_split)>=4:
-								date=href_split[-4]+'/'+href_split[-3]+'/'+href_split[-2]
+								for index in range(0,len(href_split)):
+									if len(href_split[index])==4 and href_split[index].isdigit():
+										date=href_split[index]
+										index+=1
+										if index<len(href_split):
+											date=date+'/'+href_split[index]
+										index+=1
+										if index<len(href_split):
+											date=date+'/'+href_split[index]
+										break
 								# print date
-							s="page:"+str(i)+" count: "+str(count)+" title: "+a.text.encode('utf-8').strip()+" "+date
+							s="page:"+str(i)+" count: "+str(count)+" title: "+a.text.encode('utf-8').strip()+" ,"+date
+							s1="count: "+str(count)+" title: "+a.text.encode('utf-8').strip()+" ,"+date
 							print s
 							# print a['href']
-
-							fw.write(s+"\n")
+							fw.write(s1+"\n")
 					except Exception as e:
 						print "find error:",e
 						dic['msg']="line error: "+str(e)
@@ -105,4 +117,5 @@ s='letters-to-the-editor'
 # s='local-opinions'
 s='the-posts-view'
 # s='outlook'
-download_washingtonpost_opinion(sys.argv[1],sys.argv[2],s)
+print "letters-to-the-editor",'the-posts-view','local-opinions','global-opinions','outlook'
+download_washingtonpost_opinion(sys.argv[1],sys.argv[2],sys.argv[3])

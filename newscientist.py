@@ -17,7 +17,7 @@ def swarm_newscientist(begin_page,end_page):
 	headers["Accept-Language"] = "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3"
 	headers["Accept-Encoding"] = "gzip, deflate"
 	headers["Upgrade-Insecure-Requests"] = "1"
-	file_name='newscientist_page_'+str(begin_page)+"_to_"+str(end_page)+"_"+str(int(time.time()))+".txt"
+	file_name='newscientist'+".txt"
 	count=0
 	dic={}
 	dic['status']=1
@@ -37,7 +37,7 @@ def swarm_newscientist(begin_page,end_page):
 	for i in range(begin_page,end_page+1):
 		try:
 			url = 'https://www.newscientist.com/section/news/page/'+str(i)
-			print url
+			# print url
 			req = requests.get(url, headers=headers, timeout=60)
 			# req.encoding="utf-8"
 			soup = BeautifulSoup((req.text).encode('utf-8'), 'html.parser')
@@ -54,7 +54,7 @@ def swarm_newscientist(begin_page,end_page):
 					continue
 				count+=1
 				s="page:"+str(i)+" count: "+str(count)+" title: "+h2.text.encode('utf-8').strip()
-				# print s
+				print s
 				fw.write(s+"\n")
 		except Exception as e:
 			print "parser error:",e

@@ -17,7 +17,7 @@ def swarm_financial_times(begin_page,end_page):
 	headers["Accept-Language"] = "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3"
 	headers["Accept-Encoding"] = "gzip, deflate"
 	headers["Upgrade-Insecure-Requests"] = "1"
-	file_name='financial_times_page_'+str(begin_page)+"_to_"+str(end_page)+"_"+str(int(time.time()))+".txt"
+	file_name='financial_times'+".txt"
 	count=0
 	dic={}
 	dic['status']=1
@@ -33,7 +33,7 @@ def swarm_financial_times(begin_page,end_page):
 	for i in range(begin_page,end_page+1):
 		# time.sleep(1)
 		try:
-			url = 'https://www.ft.com/opinion?format=&page='+str(i)
+			url = 'https://www.ft.com/opinion?page='+str(i)
 			req = requests.get(url, headers=headers, timeout=60)
 			# req.encoding="utf-8"
 			soup = BeautifulSoup((req.text).encode('utf-8'), 'html.parser')
@@ -56,7 +56,7 @@ def swarm_financial_times(begin_page,end_page):
 					continue
 				count+=1
 				s="page:"+str(i)+" count: "+str(count)+" title: "+a.text.encode('utf-8').strip()+' ,'+pub_time.text.encode('utf-8')
-				# print s
+				print s
 				fw.write(s+"\n")
 				#print(a['href'])
 				#print(a.string)

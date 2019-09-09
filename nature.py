@@ -11,7 +11,7 @@ def swarm_nature(begin_page,end_page,typ):
 	headers["Accept-Language"] = "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3"
 	headers["Accept-Encoding"] = "gzip, deflate"
 	headers["Upgrade-Insecure-Requests"] = "1"
-	file_name='nature_page_'+str(begin_page)+"_to_"+str(end_page)+"_"+str(int(time.time()))+".txt"
+	file_name='nature_'+typ+".txt"
 	count=0
 	dic={}
 	dic['status']=1
