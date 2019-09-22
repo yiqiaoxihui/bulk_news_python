@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+
+#author		 heaven
+#date		 2019/2/1
+#脚本描述	 
+#脚本使用说明 获取ted的标题
+
 import json
 import time
 import sys

@@ -15,18 +15,20 @@ import json
 #根据首页的moreResultsToken来获取下一页内容，以此类推
 
 def swarm_history(begin_page,end_page):
+	#配置请求头
 	headers = {}
 	headers["User-Agent"] = "Mozilla/5.0 (Windows NT 5.2) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30"
 	headers["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
 	headers["Accept-Language"] = "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3"
 	headers["Accept-Encoding"] = "gzip, deflate"
 	headers["Upgrade-Insecure-Requests"] = "1"
-	file_name='history_page_'+str(begin_page)+"_to_"+str(end_page)+"_"+str(int(time.time()))+".txt"
+	file_name='history_page_'+str(begin_page)+"_to_"+str(end_page)+".txt"
 	count=0
 	i=1
 	dic={}
 	dic['status']=1
 	dic['msg']="download success"
+	#判断输入参数页码是否为数字
 	if str(begin_page).isdigit() == False or str(end_page).isdigit() ==False:
 		print "input error: illege input"
 		dic['msg']="input error: illege input"
@@ -36,8 +38,10 @@ def swarm_history(begin_page,end_page):
 	end_page=int(end_page)
 	fw=open("download/"+file_name,'w')
 	url='https://www.history.com/news'
+	#请求url资源
 	req = requests.get(url, headers=headers, timeout=3600)
 	# req.encoding="utf-8"
+	#解析返回的html数据
 	soup = BeautifulSoup((req.text).encode('utf-8'), 'html.parser')
 	query_token=soup.find(name='div',attrs={"class":"m-component-footer--container m-component-stack--footer"})
 	if not query_token:

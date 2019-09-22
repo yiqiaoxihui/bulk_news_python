@@ -40,12 +40,13 @@ def download_washingtonpost_opinion(page_begin,page_end,type_name):
 	otherStyleTime = time.strftime("%Y_%m_%d", timeArray)#%H:%M:%S
 	file_name='washingtonpost_'+type_name+'_'+otherStyleTime+".txt"
 	fw=open("download/"+file_name,'w')
-	limit=15
+	limit=10
 	count=0
 	for i in range(page_begin,page_end+1):
 		offset=(i-1)*limit
 		try:
 			if type_name=="local-opinions":
+				# url='https://www.washingtonpost.com/pb/api/v2/render/feature/?service=prism-query&contentConfig={%22url%22:%22prism://prism.query/site,/opinions/local-opinions%22,%22offset%22:25,%22limit%22:10}&customFields={%22isLoadMore%22:true,%22offset%22:0,%22maxToShow%22:10,%22dedup%22:false}&id=f0OLVMlE4mWKvr&rid=&uri=/opinions/local-opinions/'
 				url='https://www.washingtonpost.com/pb/api/v2/render/feature/?service=prism-query&contentConfig={%22url%22:%22prism://prism.query/site,/opinions/local-opinions%22,%22offset%22:'+str(offset)+',%22limit%22:'+str(limit)+'}&customFields={%22isLoadMore%22:true,%22offset%22:0,%22maxToShow%22:10,%22dedup%22:false}&id=f0OLVMlE4mWKvr&rid=&uri=/opinions/local-opinions/'
 				# url='https://www.washingtonpost.com/pb/api/v2/render/feature/?service=prism-query&contentConfig={%22url%22:%22prism://prism.query/site,/opinions/local-opinions%22,%22offset%22:5,%22limit%22:10}&customFields={%22isLoadMore%22:true,%22offset%22:0,%22maxToShow%22:10,%22dedup%22:false}&id=f0OLVMlE4mWKvr&rid=&uri=/opinions/local-opinions/'
 			elif type_name =='global-opinions':
@@ -89,7 +90,7 @@ def download_washingtonpost_opinion(page_begin,page_end,type_name):
 										break
 								# print date
 							s="page:"+str(i)+" count: "+str(count)+" title: "+a.text.encode('utf-8').strip()+" ,"+date
-							s1="count: "+str(count)+" title: "+a.text.encode('utf-8').strip()+" ,"+date
+							s1=a.text.encode('utf-8').strip()+" ,"+date
 							print s
 							# print a['href']
 							fw.write(s1+"\n")
