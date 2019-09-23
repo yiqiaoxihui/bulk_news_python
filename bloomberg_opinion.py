@@ -19,7 +19,7 @@ def swarm_bloomberg(begin_page,end_page,type_name):
 	headers["Accept-Language"] = "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3"
 	headers["Accept-Encoding"] = "gzip, deflate"
 	headers["Upgrade-Insecure-Requests"] = "1"
-	file_name='bloomberg_page_'+type_name+'_'+str(begin_page)+"_to_"+str(end_page)+".txt"
+	file_name='bloomberg_'+type_name+'_'+str(begin_page)+"_to_"+str(end_page)+".txt"
 	count=0
 	dic={}
 	dic['status']=1
@@ -33,32 +33,36 @@ def swarm_bloomberg(begin_page,end_page,type_name):
 	end_page=int(end_page)
 	fw=open("download/"+file_name,'w')
 	for page in range(begin_page,end_page+1):
-		# time.sleep(1)
-		if page%10==0:
-			time.sleep(10)
+		if page%2==0:
+			time.sleep(3)
 		try:
-			url='https://www.bloomberg.com/markets2/api/search?query=opinion&page='+str(page)
-			# url='https://www.bloomberg.com/lineup/api/lazy_load_author_stories?slug=ASB62QVt-d0/the-editors&authorType=default&page='+str(page)
+			# url='https://www.bloomberg.com/markets2/api/search?query=opinion&page='+str(page)
+			url='https://www.bloomberg.com/lineup/api/lazy_load_author_stories?slug=ASB62QVt-d0/the-editors&authorType=default&page='+str(page)
 			req = requests.get(url, headers=headers, timeout=60)
 			# req.encoding="utf-8"
 			# print req.text
 			# soup = BeautifulSoup((req.text).encode('utf-8'), 'html.parser')
 			# list = []
 			json_text=json.loads(req.text.encode('utf-8'))
-			if json_text.get('results'):
-				results=json_text['results']
-				for item in results:
-					eyebrow=item['eyebrow']
-					headline=item['headline']
-					# print headline
-					if eyebrow=='opinion':
-						count+=1
-						# a=item.find('a',attrs={"class":"u-faux-block-link__overlay js-headline-text"})
-						# pub_time=item.find('time',attrs={"class":"fc-item__timestamp"})
-						s="page:"+str(page)+" count: "+str(count)+" title: "+item['headline'].encode('utf-8').strip()+' ,'+item['publishedAt'].encode('utf-8')
-						print s
-						s1="title: "+item['headline'].encode('utf-8').strip()+' ,'+item['publishedAt'].encode('utf-8')
-						fw.write(s1+"\n")
+			if json_text.get('html'):
+				results=json_text['html']
+				soup = BeautifulSoup((results).encode('utf-8'), 'html.parser')
+				for item in soup.find_all(name='article',attrs={"class":"story-list-story"}):#li,article-list__item
+					# print item
+					# print("*************************")
+					# print item.string.encode('utf-8')
+					a=item.find('a',attrs={"class":"story-list-story__info__headline-link"})
+					time_lable=item.find('time',attrs={"class":"hub-timestamp"})
+					if time_lable:
+						time_lable=time_lable['datetime'].encode('utf-8').strip().split('T')[0]
+					# date=time_lable.find(attrs={"class":"time-container"})
+					# print a.string.encode('utf-8')
+					
+					count+=1
+					s="page:"+str(page)+" count: "+str(count)+" title: "+a.text.encode('utf-8').strip()+", "+time_lable
+					s1="title: "+a.text.encode('utf-8').strip()+", "+time_lable
+					print s
+					fw.write(s1+"\n")
 						# if times>=3:
 						# 	break
 			else:
