@@ -39,8 +39,10 @@ def swarm_huffpost(begin_page,end_page,type_name):
 			req=''
 			# url='https://www.huffpost.com/markets2/api/search?query=opinion&page='+str(page)
 			url='https://www.huffpost.com/api/'+type_name+'/cards?page='+str(page)+'&limit=undefined'
+			# url='https://www.huffpost.com/api/section/opinion/cards?page=1&limit=undefined'
+			url='https://www.huffpost.com/api/section/opinion/cards?page=1&limit=undefined'
 			req = requests.get(url, headers=headers, timeout=60)
-			# req.encoding="utf-8"
+			req.encoding="utf-8"
 			json_text=json.loads(req.text.encode('utf-8'))
 			if json_text.get('cards'):
 				cards=json_text['cards']
@@ -73,7 +75,7 @@ def swarm_huffpost(begin_page,end_page,type_name):
 				#print(a['href'])
 				#print(a.string)
 		except Exception as e:
-			print "parser error:",e,req.text
+			print "parser error:",e,req.text.encode('utf-8').strip()
 			dic['msg']="request error: "+str(e)
 			dic['status']=0
 	fw.close()

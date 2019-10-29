@@ -18,7 +18,7 @@ def swarm_theguardian(begin_page,end_page,type_name):
 	headers["Accept-Language"] = "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3"
 	headers["Accept-Encoding"] = "gzip, deflate"
 	headers["Upgrade-Insecure-Requests"] = "1"
-	file_name='theguardian_page_'+type_name+'_'+str(begin_page)+"_to_"+str(end_page)+"_"+str(int(time.time()))+".txt"
+	file_name='theguardian_page_'+type_name+'_'+str(begin_page)+"_to_"+str(end_page)+".txt"
 	count=0
 	dic={}
 	dic['status']=1
@@ -45,8 +45,9 @@ def swarm_theguardian(begin_page,end_page,type_name):
 				a=item.find('a',attrs={"class":"u-faux-block-link__overlay js-headline-text"})
 				pub_time=item.find('time',attrs={"class":"fc-item__timestamp"})
 				s="page:"+str(i)+" count: "+str(count)+" title: "+a.text.encode('utf-8').strip()+' ,'+pub_time['datetime'].encode('utf-8')[0:10]
+				s1=a.text.encode('utf-8').strip()+' ,'+pub_time['datetime'].encode('utf-8')[0:10]
 				print s
-				fw.write(s+"\n")
+				fw.write(s1+"\n")
 				#print(a['href'])
 				#print(a.string)
 		except Exception as e:
