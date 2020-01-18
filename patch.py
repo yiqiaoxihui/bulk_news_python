@@ -26,7 +26,7 @@ def swarm_patch(begin_page,end_page):
 	headers["Accept-Language"] = "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3"
 	headers["Accept-Encoding"] = "gzip, deflate"
 	headers["Upgrade-Insecure-Requests"] = "1"
-	file_name='patch_page_'+str(begin_page)+"_to_"+str(end_page)+"_"+str(int(time.time()))+".txt"
+	file_name='patch'+".txt"
 	count=0
 	dic={}
 	dic['status']=1
@@ -60,7 +60,8 @@ def swarm_patch(begin_page,end_page):
 					h2=article.find('h2',attrs={"class":"m-0 text-xl text-serif"})
 					a=h2.find('a',attrs={})
 					s= "page:"+str(begin_page)+" count:"+str(current)+" title: "+a.string.encode("utf-8").strip()+","+date.encode("utf-8").strip()
-					fw.write(s+"\n")
+					s1=a.string.encode("utf-8").strip()+","+date.encode("utf-8").strip()
+					fw.write(s1+"\n")
 					print s
 					current+=1
 				except Exception as e:
